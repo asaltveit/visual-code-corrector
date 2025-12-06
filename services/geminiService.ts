@@ -11,8 +11,15 @@ const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 export const generateRefactor = async (code: string): Promise<RefactorResult> => {
   try {
     const prompt = `
-      You are an expert senior software engineer. 
-      Refactor the following code snippet to be cleaner, more efficient, and follow best practices.
+      You are an expert senior software engineer and UI/UX specialist.
+      Refactor the following React/HTML/CSS code snippet.
+      
+      Goals:
+      1. Improve code cleanliness and readability.
+      2. Enhance accessibility (ARIA).
+      3. Use modern practices (e.g., Hooks, functional components, Tailwind CSS if applicable).
+      4. Fix any obvious layout or logic bugs.
+      
       Also, generate comprehensive unit tests for the refactored code.
       
       Input Code:
@@ -57,20 +64,40 @@ export const generateRefactor = async (code: string): Promise<RefactorResult> =>
 };
 
 /**
- * Generates a visual representation (flowchart/diagram) using Nano Banana Pro (Gemini 3 Pro Image Preview).
+ * Generates a realistic webpage render of the code using Nano Banana Pro.
  */
-export const generateVisual = async (code: string): Promise<VisualGenerationResponse> => {
+export const generateWebpageRender = async (code: string, label: string): Promise<VisualGenerationResponse> => {
   try {
+    // Enhanced prompt for rendering code fragments
     const prompt = `
-      Create a high-quality, professional technical diagram or flowchart that explains the logic and control flow of the following code snippet.
-      The visual should be clean, high-contrast, and easy to understand for a developer.
+      Render this React/HTML/CSS code as a realistic webpage component. 
+      High resolution, 2K, clean, readable, professional style.
+      
+      Important:
+      - If the code is a fragment (e.g., a single button or card), render it centered on a clean background.
+      - If the code uses inline styles, render them exactly as described (even if messy) for the "Original" version.
+      - If the code uses libraries not present (like FontAwesome), approximate the look with standard icons or text.
+      
+      Context: This is the "${label}" version of the component.
       
       Code Snippet:
-      ${code}
+      ${code.slice(0, 8000)} 
     `;
 
+    return await generateImageFromPrompt(prompt);
+  } catch (error) {
+    console.error(`Visual Generation Error (${label}):`, error);
+    throw error;
+  }
+};
+
+/**
+ * Generates an image directly from a raw prompt (Used for Documentation Demos and Renders)
+ */
+export const generateImageFromPrompt = async (prompt: string): Promise<VisualGenerationResponse> => {
+  try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-pro-image-preview", // Mapped from "Nano Banana Pro"
+      model: "gemini-3-pro-image-preview",
       contents: prompt,
       config: {
         // Nano Banana Pro does not support responseMimeType/responseSchema
@@ -78,7 +105,6 @@ export const generateVisual = async (code: string): Promise<VisualGenerationResp
     });
 
     // Extract image from response parts
-    // The response might contain text and inlineData
     const parts = response.candidates?.[0]?.content?.parts;
     let imageUrl = "";
 
@@ -96,9 +122,8 @@ export const generateVisual = async (code: string): Promise<VisualGenerationResp
     }
 
     return { imageUrl };
-
   } catch (error) {
-    console.error("Visual Generation Error:", error);
+    console.error("Image Generation Error:", error);
     throw error;
   }
 };
