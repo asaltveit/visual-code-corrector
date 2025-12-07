@@ -2,6 +2,8 @@
 
 An AI-powered tool to refactor code, generate unit tests, and create visual verification mockups using **Gemini 3** (Code Reasoning) and **Nano Banana Pro** (Visual Generation).
 
+Created during the Gemini 3 Hackathon SF hackathon 12/06/25.
+
 ## Features
 
 *   **Semantic Refactoring**: Uses Gemini 3 to analyze messy/legacy code, improve logic, accessibility, and modern practices.
