@@ -1,4 +1,5 @@
 export const SAMPLES = [
+    // --- FRONTEND SAMPLES ---
     {
       category: "React Components",
       name: "Messy User Card (Inline Styles)",
@@ -175,6 +176,116 @@ export const SAMPLES = [
         </div>
       </div>
     )
+  }`
+    },
+  
+    // --- LOGIC & BACKEND SAMPLES ---
+    {
+      category: "Algorithmic Logic (JS)",
+      name: "Slow Recursive Fibonacci",
+      code: `function fib(n) {
+    // inefficient recursive implementation
+    // variable names are vague
+    var x = n;
+    if (x <= 1) return x;
+    
+    // O(2^n) complexity - will crash browser for large n
+    return fib(x - 1) + fib(x - 2);
+  }
+  
+  // Calculate for 40 (VERY SLOW)
+  console.log(fib(40));`
+    },
+    {
+      category: "Backend Logic (Python)",
+      name: "Unoptimized Bubble Sort",
+      code: `def sort_list(L):
+      # bad indentation and naming
+      n = len(L)
+      for i in range(n):
+        for j in range(0, n-i-1):
+              # nested loop makes this O(N^2)
+              if L[j] > L[j+1] :
+                  # manual swap
+                  temp = L[j]
+                  L[j] = L[j+1]
+                  L[j+1] = temp
+      return L
+  
+  data = [64, 34, 25, 12, 22, 11, 90]
+  print(sort_list(data))`
+    },
+    {
+      category: "Security (Node.js)",
+      name: "SQL Injection Vulnerability",
+      code: `const getUser = (username, password) => {
+      // SECURITY RISK: Direct string concatenation
+      // User can input: "' OR '1'='1" to bypass auth
+      
+      const query = "SELECT * FROM users WHERE user = '" + username + "' AND pass = '" + password + "'";
+      
+      database.execute(query, (err, result) => {
+          if(err) {
+              console.log("Error: " + err); // Information leakage
+          }
+          return result;
+      });
+  }`
+    },
+    {
+      category: "Data Processing (Python)",
+      name: "Fragile CSV Parser",
+      code: `def parse_log_file(lines):
+      results = []
+      # Using global state unnecessarily
+      global line_count 
+      line_count = 0
+      
+      for l in lines:
+          line_count = line_count + 1
+          if "ERROR" in l:
+              # Fragile string splitting - will break if log format changes slightly
+              parts = l.split(" ")
+              
+              # Magic numbers for array indices
+              code = parts[2]
+              msg = parts[3] + " " + parts[4]
+              
+              # Messy string construction
+              results.append(str(line_count) + " | " + code + " -> " + msg)
+              
+      return results`
+    },
+    {
+      category: "Logic (JavaScript)",
+      name: "Redundant Cart Calculation",
+      code: `function calculateTotal(cart) {
+    var total = 0;
+    // Using var instead of let/const
+    // Inefficient loop logic
+    for(var i=0; i<cart.length; i++) {
+      var item = cart[i];
+      
+      // Deeply nested if/else
+      if(item.type == 'food') {
+        if(item.price > 10) {
+          total += item.price * 0.9; // 10% discount
+        } else {
+          total += item.price;
+        }
+      } else {
+          if (item.type == 'electronics') {
+              total += item.price;
+          } else {
+              total += item.price;
+          }
+      }
+      
+      // LOGIC BUG: Tax applied inside loop? 
+      // Compounding tax for every item iteration!
+      total = total * 1.05; 
+    }
+    return total.toFixed(2); // returns string, expected number
   }`
     }
   ];

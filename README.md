@@ -1,20 +1,45 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Multi-Modal Code Refactorer with Visual Verification
 
-# Run and deploy your AI Studio app
+An AI-powered tool to refactor code, generate unit tests, and create visual verification mockups using **Gemini 3** (Code Reasoning) and **Nano Banana Pro** (Visual Generation).
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/temp/2
+*   **Semantic Refactoring**: Uses Gemini 3 to analyze messy/legacy code, improve logic, accessibility, and modern practices.
+*   **Automated Unit Tests**: Generates a comprehensive test suite for the refactored code.
+*   **Visual Verification (New!)**:
+    *   Generates a "Before" render of the original messy code.
+    *   Generates an "After" render of the cleaned refactored code.
+    *   Displays them side-by-side to visually confirm that the visual output remains consistent (or improves) while the underlying code quality increases.
+*   **Client-Side Only**: No database or backend required. Runs entirely in the browser using the Gemini API.
+*   **History**: Persists your refactoring sessions in LocalStorage.
 
-## Run Locally
+## Tech Stack
 
-**Prerequisites:**  Node.js
+*   **Framework**: Next.js 14 (App Router) / React
+*   **Styling**: TailwindCSS + Lucide React Icons
+*   **AI Models**:
+    *   `gemini-3-pro-preview`: Code logic, refactoring, tests.
+    *   `gemini-3-pro-image-preview` (Nano Banana Pro): Visual rendering of code components.
 
+## Setup
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1.  Clone the repository.
+2.  Install dependencies: `npm install`
+3.  Create a `.env.local` file with your Gemini API Key:
+    ```bash
+    NEXT_PUBLIC_GEMINI_API_KEY=your_api_key_here
+    ```
+4.  Run locally: `npm run dev`
+
+## How it Works
+
+1.  **Input**: Paste your React/HTML/CSS component into the left panel.
+2.  **Process**:
+    *   Gemini 3 refactors the code structure.
+    *   Simultaneously, Nano Banana Pro renders the "Before" state image.
+    *   Once refactoring is complete, Nano Banana Pro renders the "After" state image.
+3.  **Verify**: Switch to the "Visual Verify" tab to compare the renders side-by-side. Check the "Refactored Code" tab to see the clean syntax.
+
+## License
+
+MIT

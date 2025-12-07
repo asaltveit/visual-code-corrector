@@ -9,12 +9,15 @@ export interface HistoryItem {
   timestamp: number;
   originalCode: string;
   refactorResult: RefactorResult | null;
-  visualUrl: string | null;
   status: 'pending' | 'success' | 'error';
   error?: string;
+  // Visual Verification fields
+  isBackend?: boolean;
+  visualBeforeUrl?: string | null;
+  visualAfterUrl?: string | null;
 }
 
-export type TabOption = 'refactor' | 'tests' | 'visual';
+export type TabOption = 'refactor' | 'tests' | 'visual' | 'sandbox';
 
 export interface VisualGenerationResponse {
     imageUrl: string;

@@ -11,7 +11,7 @@ interface HistorySidebarProps {
 export const HistorySidebar: React.FC<HistorySidebarProps> = ({ history, onSelect, selectedId }) => {
   return (
     <div className="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col h-full">
-      <div className="p-4 border-b border-slate-200 flex items-center gap-2">
+      <div className="p-4 border-b border-slate-200 flex items-center gap-2 h-[73px] shrink-0">
         <Clock className="text-indigo-600" size={20} />
         <h2 className="font-semibold text-slate-800">History</h2>
       </div>
